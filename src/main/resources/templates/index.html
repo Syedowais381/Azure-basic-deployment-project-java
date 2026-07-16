@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 40px 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { margin-bottom: 20px; color: #333; }
+        .btn { display: inline-block; padding: 10px 20px; background: #0078d4; color: white; text-decoration: none; border-radius: 4px; margin-bottom: 20px; }
+        .btn:hover { background: #005a9e; }
+        .btn-danger { background: #d13438; padding: 6px 12px; font-size: 14px; }
+        .btn-edit { background: #107c10; padding: 6px 12px; font-size: 14px; margin-right: 8px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #0078d4; color: white; }
+        tr:hover { background: #f9f9f9; }
+        .empty { text-align: center; color: #666; padding: 40px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Employee Management System</h1>
+    <a href="/add" class="btn">+ Add Employee</a>
+
+    <table th:if="${!employees.isEmpty()}">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Salary</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="emp : ${employees}">
+            <td th:text="${emp.id}"></td>
+            <td th:text="${emp.name}"></td>
+            <td th:text="${emp.email}"></td>
+            <td th:text="${emp.department}"></td>
+            <td th:text="${emp.salary != null ? '$' + emp.salary : '-'}"></td>
+            <td>
+                <a th:href="@{/edit/{id}(id=${emp.id})}" class="btn btn-edit">Edit</a>
+                <a th:href="@{/delete/{id}(id=${emp.id})}" class="btn btn-danger"
+                   onclick="return confirm('Delete this employee?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p class="empty" th:if="${employees.isEmpty()}">No employees yet. Click "Add Employee" to get started.</p>
+</div>
+</body>
+</html>
