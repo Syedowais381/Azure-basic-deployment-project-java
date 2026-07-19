@@ -21,7 +21,7 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn clean package -DskipTests
+        run: mvn clean package -DskipTests -P!local
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
